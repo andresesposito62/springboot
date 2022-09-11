@@ -1,14 +1,33 @@
 package com.fundamentosplatzi.springboot.fundamentos;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.fundamentosplatzi.springboot.fundamentos.component.ComponentDependency;
+
 @SpringBootApplication
-public class FundamentosApplication {
+public class FundamentosApplication implements CommandLineRunner{
+
+private ComponentDependency componentDependency;
+
+
+//Cuando tenemos multiples implementaciones de una
+//dependencia, se usa la etiqueta Qualifier para indicar
+//cual dependencia se desea inyectar
+public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency){
+	this.componentDependency = componentDependency;
+}
 
 	public static void main(String[] args) {
 		SpringApplication.run(FundamentosApplication.class, args);
-		System.out.println("holaaaaaaaaa");
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		componentDependency.saludar();
+		
 	}
 
 }
