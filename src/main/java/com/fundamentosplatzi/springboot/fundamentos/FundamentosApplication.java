@@ -10,6 +10,7 @@ import com.fundamentosplatzi.springboot.fundamentos.bean.MyBean;
 import com.fundamentosplatzi.springboot.fundamentos.bean.MyBeanWithDependency;
 import com.fundamentosplatzi.springboot.fundamentos.bean.MyBeanWithProperties;
 import com.fundamentosplatzi.springboot.fundamentos.component.ComponentDependency;
+import com.fundamentosplatzi.springboot.fundamentos.pojo.UserPojo;
 
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner{
@@ -18,16 +19,18 @@ private ComponentDependency componentDependency;
 private MyBean myBean;
 private MyBeanWithDependency myBeanWithDependency;
 private MyBeanWithProperties myBeanWithProperties;
+private UserPojo userPojo;
 
 
 //Cuando tenemos multiples implementaciones de una
 //dependencia, se usa la etiqueta Qualifier para indicar
 //cual dependencia se desea inyectar
-public FundamentosApplication(MyBean myBeanInyected, @Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBeanWithDependency myBeanWithDependency, MyBeanWithProperties myBeanWithProperties){
+public FundamentosApplication(MyBean myBeanInyected, @Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBeanWithDependency myBeanWithDependency, MyBeanWithProperties myBeanWithProperties, UserPojo userPojo){
 	this.componentDependency = componentDependency;
 	this.myBean = myBeanInyected;
 	this.myBeanWithDependency = myBeanWithDependency;
 	this.myBeanWithProperties = myBeanWithProperties;
+	this.userPojo = userPojo;
 }
 
 	public static void main(String[] args) {
@@ -37,9 +40,10 @@ public FundamentosApplication(MyBean myBeanInyected, @Qualifier("componentTwoImp
 	@Override
 	public void run(String... args) throws Exception {
 		//componentDependency.saludar();
-		myBean.print();
-		myBeanWithDependency.printWithDependency();
-		System.out.println(myBeanWithProperties.function());
+		//myBean.print();
+		//myBeanWithDependency.printWithDependency();
+		//System.out.println(myBeanWithProperties.function());
+		System.out.println(userPojo.getEmail());
 	}
 
 }
