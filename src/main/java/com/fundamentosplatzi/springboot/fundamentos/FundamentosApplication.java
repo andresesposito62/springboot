@@ -1,5 +1,7 @@
 package com.fundamentosplatzi.springboot.fundamentos;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +23,7 @@ private MyBeanWithDependency myBeanWithDependency;
 private MyBeanWithProperties myBeanWithProperties;
 private UserPojo userPojo;
 
+private final Log logger = LogFactory.getLog(FundamentosApplication.class);
 
 //Cuando tenemos multiples implementaciones de una
 //dependencia, se usa la etiqueta Qualifier para indicar
@@ -43,7 +46,14 @@ public FundamentosApplication(MyBean myBeanInyected, @Qualifier("componentTwoImp
 		//myBean.print();
 		//myBeanWithDependency.printWithDependency();
 		//System.out.println(myBeanWithProperties.function());
-		System.out.println(userPojo.getEmail());
+		//System.out.println(userPojo.getEmail());
+		//logger.error("Esto es un error");
+		//logger.info("mensaje de info");
+		try{
+			int numero = 14/0;
+		}catch(Exception e){
+			logger.error(e.getStackTrace());
+		}
 	}
 
 }
