@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Sort;
 
 import com.fundamentosplatzi.springboot.fundamentos.bean.MyBean;
 import com.fundamentosplatzi.springboot.fundamentos.bean.MyBeanWithDependency;
@@ -74,6 +75,7 @@ public class FundamentosApplication implements CommandLineRunner{
 				logger.error(e.getStackTrace());
 			}*/
 			saveUsersInDataBase();
+			getInformationJpqlFromUser();
 		}
 
 		private void saveUsersInDataBase(){
@@ -82,7 +84,17 @@ public class FundamentosApplication implements CommandLineRunner{
 			Users user3 = new Users("Daniela", "Daniela@gmail.com", LocalDate.of(2022, 12, 20));
 			List<Users> list = Arrays.asList(user, user2, user3);
 			userRepository.saveAll(list);
-			System.out.println("Datos de db" + userRepository.findAll());
+			//System.out.println("Datos de db" + userRepository.findAll());
+		}
+
+		private void getInformationJpqlFromUser(){
+			logger.error(userRepository.findByUserEmail("Andres@gmail.com")
+				.orElseThrow(()->new RuntimeException("No se encontro el usuario")));
+		
+		
+			userRepository.findAndSort("Andres", Sort.by("id").descending())
+					.stream()
+					.forEach(user -> logger.error("Usuario con metodo sort:*************************************************" + user));
 		}
 
 }
