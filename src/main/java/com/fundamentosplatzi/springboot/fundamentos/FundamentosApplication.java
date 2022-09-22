@@ -88,13 +88,36 @@ public class FundamentosApplication implements CommandLineRunner{
 		}
 
 		private void getInformationJpqlFromUser(){
-			logger.error(userRepository.findByUserEmail("Andres@gmail.com")
-				.orElseThrow(()->new RuntimeException("No se encontro el usuario")));
+			//logger.error(userRepository.findByUserEmail("Andres@gmail.com")
+			//	.orElseThrow(()->new RuntimeException("No se encontro el usuario")));
 		
 		
-			userRepository.findAndSort("Andres", Sort.by("id").descending())
-					.stream()
-					.forEach(user -> logger.error("Usuario con metodo sort:*************************************************" + user));
-		}
+			//userRepository.findAndSort("Andres", Sort.by("id").descending())
+			//		.stream()
+			//		.forEach(user -> logger.error("Usuario con metodo sort:*************************************************" + user));
+		
+			//userRepository.findByName("Andres")
+				//.stream()
+				//.forEach(user -> logger.error("Usuario con metodo findByName:*************************************************" + user));
+				
+			//userRepository.findByEmailAndName("Andres@gmail.com", "Andres")
+				//.stream()
+				//.forEach(user -> logger.error("Usuario con metodo findByName:*************************************************" + user));
+		
+
+				//userRepository.findByName("Andres")
+				//.stream()
+				//.forEach(user -> logger.error("findByName:*************************************************" + user));
+				
+				//userRepository.findByNameOrEmail(null, "Andres@gmail.com")
+				//.stream()
+				//.forEach(user -> logger.error("findByName:*************************************************" + user));
+		
+				userRepository.findByBirthDateBetween(LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20))
+				.stream()
+				.forEach(user -> logger.error("findByName:*************************************************" + user));
+		
+
+			}
 
 }
