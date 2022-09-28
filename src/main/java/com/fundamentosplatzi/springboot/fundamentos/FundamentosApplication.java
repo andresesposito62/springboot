@@ -113,9 +113,16 @@ public class FundamentosApplication implements CommandLineRunner{
 				//.stream()
 				//.forEach(user -> logger.error("findByName:*************************************************" + user));
 		
-				userRepository.findByBirthDateBetween(LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20))
-				.stream()
-				.forEach(user -> logger.error("findByName:*************************************************" + user));
+				//userRepository.findByBirthDateBetween(LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20))
+				//.stream()
+				//.forEach(user -> logger.error("findByName:*************************************************" + user));
+		
+				
+
+				
+				logger.error(" getAllByBirthdayAndEmail findByName:"+ userRepository.getAllByBirthDateAndEmail(LocalDate.of(2022, 4, 20), "Andres@gmail.com") + "*************************************************" );
+				//.stream()
+				//.forEach(user -> logger.error(" getAllByBirthdayAndEmail findByName:*************************************************" + user));
 		
 
 			}
