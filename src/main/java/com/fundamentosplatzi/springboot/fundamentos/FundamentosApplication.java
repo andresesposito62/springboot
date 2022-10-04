@@ -23,6 +23,7 @@ import com.fundamentosplatzi.springboot.fundamentos.component.ComponentDependenc
 import com.fundamentosplatzi.springboot.fundamentos.entity.Users;
 import com.fundamentosplatzi.springboot.fundamentos.pojo.UserPojo;
 import com.fundamentosplatzi.springboot.fundamentos.repository.UserRepository;
+import com.fundamentosplatzi.springboot.fundamentos.service.UserService;
 
 
 @SpringBootApplication
@@ -34,6 +35,7 @@ public class FundamentosApplication implements CommandLineRunner{
 	private MyBeanWithProperties myBeanWithProperties;
 	private UserPojo userPojo;
 	private UserRepository userRepository;
+	private UserService userService;
 
 	private final Log logger = LogFactory.getLog(FundamentosApplication.class);
 
@@ -46,7 +48,8 @@ public class FundamentosApplication implements CommandLineRunner{
 		 MyBeanWithDependency myBeanWithDependency,
 		 MyBeanWithProperties myBeanWithProperties,
 		 UserPojo userPojo,
-		 UserRepository userRepository
+		 UserRepository userRepository,
+		 UserService userService
 	){
 		this.componentDependency = componentDependency;
 		this.myBean = myBeanInyected;
@@ -54,6 +57,7 @@ public class FundamentosApplication implements CommandLineRunner{
 		this.myBeanWithProperties = myBeanWithProperties;
 		this.userPojo = userPojo;
 		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 		public static void main(String[] args) {
@@ -74,8 +78,9 @@ public class FundamentosApplication implements CommandLineRunner{
 			}catch(Exception e){
 				logger.error(e.getStackTrace());
 			}*/
-			saveUsersInDataBase();
-			getInformationJpqlFromUser();
+			//saveUsersInDataBase();
+			//getInformationJpqlFromUser();
+			saveWithErrorTransactional();
 		}
 
 		private void saveUsersInDataBase(){
@@ -85,6 +90,19 @@ public class FundamentosApplication implements CommandLineRunner{
 			List<Users> list = Arrays.asList(user, user2, user3);
 			userRepository.saveAll(list);
 			//System.out.println("Datos de db" + userRepository.findAll());
+		}
+
+				
+		private void saveWithErrorTransactional() {
+			Users test1 = new Users("TestTransactional1", "TestTransactional1@domain.com", LocalDate.now());
+			Users test2 = new Users("TestTransactional2", "TestTransactional2@domain.com", LocalDate.now());
+			Users test3 = new Users("TestTransactional3", "TestTransactional3@domain.com", LocalDate.now());
+			Users test4 = new Users("TestTransactional4", "TestTransactional4@domain.com", LocalDate.now());
+		
+			List<Users> users = Arrays.asList(test1, test2, test3, test4);
+			userService.saveTransactional(users);
+			userService.getAllUsers().stream()
+			.forEach(user -> logger.info("Este es el usuario dentro del metodo transaccional: " + user));
 		}
 
 		private void getInformationJpqlFromUser(){
@@ -116,8 +134,7 @@ public class FundamentosApplication implements CommandLineRunner{
 				//userRepository.findByBirthDateBetween(LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20))
 				//.stream()
 				//.forEach(user -> logger.error("findByName:*************************************************" + user));
-		
-				
+
 
 				
 				logger.error(" getAllByBirthdayAndEmail findByName:"+ userRepository.getAllByBirthDateAndEmail(LocalDate.of(2022, 4, 20), "Andres@gmail.com") + "*************************************************" );
