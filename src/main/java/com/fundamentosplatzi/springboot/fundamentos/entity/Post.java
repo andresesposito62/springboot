@@ -23,7 +23,7 @@ public class Post {
     private Long description;
 
     @ManyToOne
-    @JsonBackReferenceg
+    @JsonBackReference
     private Users user;
 
     public Post() {
