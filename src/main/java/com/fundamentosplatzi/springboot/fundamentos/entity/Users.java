@@ -41,6 +41,10 @@ public class Users {
 
     }
 
+    public Users(Long id){
+        this.id = id;
+    }
+
     public Users(String name, String email, LocalDate birthDate) {
         this.name = name;
         this.email = email;
