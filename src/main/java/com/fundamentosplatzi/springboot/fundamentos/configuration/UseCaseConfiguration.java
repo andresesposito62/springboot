@@ -1,0 +1,17 @@
+package com.fundamentosplatzi.springboot.fundamentos.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.fundamentosplatzi.springboot.fundamentos.service.UserService;
+import com.fundamentosplatzi.springboot.fundamentos.usecase.GetUser;
+import com.fundamentosplatzi.springboot.fundamentos.usecase.GetUserImplement;
+
+@Configuration
+public class UseCaseConfiguration {
+    
+    @Bean
+    GetUser getUser(UserService userService){
+        return new GetUserImplement(userService);
+    }
+}
